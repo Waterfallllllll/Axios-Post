@@ -1,13 +1,29 @@
 window.addEventListener("DOMContentLoaded", () => {
-    function req() {
-        getResources("http://localhost:3000/people")
-            .then(data => createCards(data.data)) // axios дает нам много свойств вместе с самими данными, поэтому нужно точно указать свойство с данными.
-            .catch(err => console.error(err));
+    const form = document.querySelector("form");
+
+    function req(e) {
+
+        e.preventDefault(); // Чтобы форма не перезагружала страницу при нажатии кнопки.
+
+        let formData = new FormData(form);
+        formData.append("id", Math.random()); // просто чтобы показать, что мы можем аппендить в объект formdata пару ключ значение.
+        // Дальше мы не можем просто сделать  let json = JSON.stringify(formData). Это работать не будет. Если мы хоти отправить объект formdata в json файл, нужно сделать то что ниже. Просто перезаписать все в обычный js объект, а затем js объект переделать в json формат.
+
+        let obj = {};
         
-        this.remove();
+        formData.forEach((value, key) => {
+            obj[key] = value;
+        });
+
+        // getResources("http://localhost:3000/people")
+        //     .then(data => createCards(data.data)) // axios дает нам много свойств вместе с самими данными, поэтому нужно точно указать свойство с данными.
+        //     .catch(err => console.error(err));
+
+        axios.post("http://localhost:3000/people", obj); // Для axios достаточно одной строки
+        
     }
 
-    document.querySelector("button").addEventListener("click", req, { "once": true });
+    form.addEventListener("submit", (e) => req(e), {"once": true});
     
     async function getResources(url) {
         const res = await axios(`${url}`);

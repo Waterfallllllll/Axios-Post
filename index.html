@@ -10,8 +10,16 @@
 </head>
 
 <body>
-    <button>Click</button>
-    <div class="app"></div>
+    <div class="app">
+        <button>Click</button>
+    </div>
+    <form>
+        <!-- Если мы предпологаем, что с нашими инпутами будет какое-то серверное взаимодействие, всегда нужно добавлять
+        аттрибут name. Именно по нему у нас идёт ориентация по данному инпуту -->
+        <input type="text" name="name">
+        <input type="text" name="age">
+        <button>Submit</button>
+    </form>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/script.js"></script>
 </body>
