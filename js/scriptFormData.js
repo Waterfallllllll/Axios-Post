@@ -1,5 +1,3 @@
-//В случае, если работает с json сервером.
-
 window.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
 
@@ -8,20 +6,29 @@ window.addEventListener("DOMContentLoaded", () => {
         e.preventDefault(); // Чтобы форма не перезагружала страницу при нажатии кнопки.
 
         let formData = new FormData(form);
-        formData.append("id", Math.random()); // просто чтобы показать, что мы можем аппендить в объект formdata пару ключ значение.
-        // Дальше мы не можем просто сделать  let json = JSON.stringify(formData). Это работать не будет. Если мы хоти отправить объект formdata в json файл, нужно сделать то что ниже. Просто перезаписать все в обычный js объект, а затем js объект переделать в json формат.
+        // formData.append("id", Math.random()); // просто чтобы показать, что мы можем аппендить в объект formdata пару ключ значение.
+        // // Дальше мы не можем просто сделать  let json = JSON.stringify(formData). Это работать не будет. Если мы хоти отправить объект formdata в json файл, нужно сделать то что ниже. Просто перезаписать все в обычный js объект, а затем js объект переделать в json формат.
 
-        let obj = {};
+        // let obj = {};
         
-        formData.forEach((value, key) => {
-            obj[key] = value;
-        });
+        // formData.forEach((value, key) => {
+        //     obj[key] = value;
+        // });
 
         // getResources("http://localhost:3000/people")
         //     .then(data => createCards(data.data)) // axios дает нам много свойств вместе с самими данными, поэтому нужно точно указать свойство с данными.
         //     .catch(err => console.error(err));
 
-        axios.post("http://localhost:3000/people", obj); // Для axios достаточно одной строки
+        // axios.post("http://localhost:3000/people", obj); // Для axios достаточно одной строки
+
+        axios({
+            method: "post",
+            url: "./api.php",
+            data: formData,
+            headers: {
+                "content-type": "multipart/form-data" // Тут работает если указать и если не указать.
+            }
+        }).then(data => console.log(data.data));
         
     }
 
